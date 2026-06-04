@@ -4,9 +4,14 @@
 #include "Nodo.h"
 #include <iostream>
 
-
-
-
+/**
+ * @class ArbolLibros
+ * @brief Estructura de datos de Árbol General (N-ario) para gestionar una jerarquía de libros.
+ * * Esta clase implementa un árbol donde la raíz contiene una colección de libros 
+ * principales, y cada libro principal puede contener múltiples libros similares 
+ * como hijos directos. Proporciona métodos para recorrer, filtrar y consultar 
+ * la información de los nodos por medio de la recursividad.
+ */
 class ArbolLibros {
 private:
     NodoArbol* raiz; 
@@ -112,20 +117,35 @@ public:
     NodoArbol* get_raiz() {
         return raiz;
     }
-
    
-    
+    /**
+     * @brief Lista los IDs de los libros principales del árbol.
+     * * Realiza un recorrido de tipo Preorder (Preorden) sobre la estructura del árbol.
+     * Durante el recorrido, evalúa el tipo de nodo y, si corresponde a un "Libro" 
+     * principal, imprime el ID correspondiente como salida.
+     */
     void listar() {
         std::cout << "--- Listando IDs (Preorder) ---" << std::endl;
         _listar_preorder(raiz); 
     }
-
+    /**
+     * @brief Elimina del árbol todos los libros con un rating menor o igual a 'r'.
+     * * @param r Umbral de calificación. Los libros con rating <= r serán eliminados.
+     * * Recorre el árbol evaluando las calificaciones. Utiliza iteradores sobre 
+     * el vector de hijos para eliminar las referencias sin romper la estructura general. 
+     * Adicionalmente, libera la memoria dinámica (subárboles) de los nodos a medida que se van descartando.
+     */
     void borrar_ratings(float r) {
         std::cout << "--- Borrando libros con rating <= " << r << " ---" << std::endl;
         _borrar_ratings(raiz, r);
         std::cout << "Borrado completado." << std::endl;
     }
-
+    /**
+     * @brief Identifica y lista los IDs de los libros considerados "precursores".
+     * * Un libro se considera precursor si posee libros similares (hijos) y el año de 
+     * publicación de TODOS sus libros similares es estrictamente mayor (posterior) 
+     * al año de publicación del libro principal. Esta sección imprime los IDs que cumplen dicha condición.
+     */
     void precursores() {
         std::cout << "--- Listando IDs de Precursores ---" << std::endl;
         _precursores(raiz);
